@@ -1,0 +1,203 @@
+export const translations = {
+  en: {
+    // App
+    appName: 'Khata Sangrah',
+    tagline: 'Digital Ledger',
+
+    // Navigation
+    home: 'Home',
+    customers: 'Customers',
+    settings: 'Settings',
+
+    // Home
+    totalToCollect: 'Total Udhaar to Collect',
+    addEntry: 'Add Entry',
+    viewAll: 'View All',
+    recentRecords: 'Recent Records',
+    seeAll: 'See All',
+    noRecentRecords: 'No records yet. Add your first entry!',
+    totalCustomers: 'Total Customers',
+
+    // Customers
+    allCustomers: 'All Customers',
+    searchCustomers: 'Search by name or phone...',
+    sortByHighDues: 'High Dues First',
+    sortByName: 'By Name',
+    sortByRecent: 'Most Recent',
+    noCustomers: 'No customers yet. Add your first customer!',
+    addCustomer: 'Add Customer',
+    customerName: 'Customer Name',
+    mobileNumber: 'Mobile Number',
+    save: 'Save',
+    cancel: 'Cancel',
+    edit: 'Edit',
+    delete: 'Delete',
+    confirmDelete: 'Are you sure? This will delete all transactions.',
+
+    // Ledger
+    balanceDue: 'Balance Due',
+    settled: 'Settled',
+    allEntries: 'All Entries',
+    udhaarsOnly: 'Udhaar Only',
+    jamasOnly: 'Jama Only',
+    addUdhaar: '+ Add Udhaar',
+    addJama: '+ Add Jama',
+    udhaar: 'Udhaar',
+    jama: 'Jama',
+    noTransactions: 'No transactions yet.',
+    runningBalance: 'Bal.',
+    sendReminder: 'Send Reminder',
+    viewBills: 'View Attached Bill(s)',
+    description: 'Description (optional)',
+    amount: 'Amount (₹)',
+    attachBill: 'Attach Bill Photo',
+    addTransaction: 'Add Transaction',
+    deleteTransaction: 'Delete this transaction?',
+
+    // Settings
+    shopSettings: 'Shop Settings',
+    shopName: 'Shop Name',
+    ownerMobile: 'Owner Mobile',
+    language: 'Language',
+    english: 'English',
+    hindi: 'Hindi',
+    whatsappTemplate: 'WhatsApp Reminder Template',
+    templateHint: 'Use {ShopName} and {Amount} as variables.',
+    exportData: 'Export Backup (JSON)',
+    importData: 'Import from JSON',
+    lastBackup: 'Last backup:',
+    never: 'Never',
+    backupReminder: "You haven't backed up your data this week. Download JSON backup now.",
+    backupNow: 'Backup Now',
+    dataManagement: 'Data Management',
+    account: 'Account',
+    signOut: 'Sign Out',
+
+    // Auth
+    signIn: 'Sign In',
+    signUp: 'Sign Up',
+    email: 'Email',
+    password: 'Password',
+    phone: 'Phone Number (+91...)',
+    sendOTP: 'Send OTP',
+    verifyOTP: 'Verify OTP',
+    enterOTP: 'Enter 6-digit OTP',
+    orContinueWith: 'or continue with',
+    continueWithGoogle: 'Continue with Google',
+    haveAccount: 'Already have an account? Sign in',
+    noAccount: "Don't have an account? Sign up",
+    welcomeBack: 'Welcome Back!',
+    createAccount: 'Create Account',
+    yourShopName: 'Your Shop Name',
+
+    // Misc
+    loading: 'Loading...',
+    error: 'Something went wrong.',
+    retry: 'Retry',
+    close: 'Close',
+    confirm: 'Confirm',
+  },
+
+  hi: {
+    // App
+    appName: 'खाता संग्रह',
+    tagline: 'डिजिटल खाता',
+
+    // Navigation
+    home: 'होम',
+    customers: 'ग्राहक',
+    settings: 'सेटिंग्स',
+
+    // Home
+    totalToCollect: 'कुल उधार वसूली',
+    addEntry: 'एंट्री जोड़ें',
+    viewAll: 'सभी देखें',
+    recentRecords: 'हाल के रिकॉर्ड',
+    seeAll: 'सब देखें',
+    noRecentRecords: 'अभी तक कोई रिकॉर्ड नहीं। पहली एंट्री जोड़ें!',
+    totalCustomers: 'कुल ग्राहक',
+
+    // Customers
+    allCustomers: 'सभी ग्राहक',
+    searchCustomers: 'नाम या फ़ोन से खोजें...',
+    sortByHighDues: 'सबसे ज़्यादा बकाया',
+    sortByName: 'नाम से',
+    sortByRecent: 'हाल में जोड़े',
+    noCustomers: 'अभी तक कोई ग्राहक नहीं। पहला ग्राहक जोड़ें!',
+    addCustomer: 'ग्राहक जोड़ें',
+    customerName: 'ग्राहक का नाम',
+    mobileNumber: 'मोबाइल नंबर',
+    save: 'सेव करें',
+    cancel: 'रद्द करें',
+    edit: 'संपादित करें',
+    delete: 'हटाएं',
+    confirmDelete: 'क्या आप निश्चित हैं? सभी लेनदेन हट जाएंगे।',
+
+    // Ledger
+    balanceDue: 'बकाया राशि',
+    settled: 'चुकता',
+    allEntries: 'सभी एंट्री',
+    udhaarsOnly: 'केवल उधार',
+    jamasOnly: 'केवल जमा',
+    addUdhaar: '+ उधार जोड़ें',
+    addJama: '+ जमा जोड़ें',
+    udhaar: 'उधार',
+    jama: 'जमा',
+    noTransactions: 'अभी तक कोई लेनदेन नहीं।',
+    runningBalance: 'शेष.',
+    sendReminder: 'याद दिलाएं',
+    viewBills: 'बिल देखें',
+    description: 'विवरण (वैकल्पिक)',
+    amount: 'राशि (₹)',
+    attachBill: 'बिल फोटो जोड़ें',
+    addTransaction: 'लेनदेन जोड़ें',
+    deleteTransaction: 'यह लेनदेन हटाएं?',
+
+    // Settings
+    shopSettings: 'दुकान सेटिंग्स',
+    shopName: 'दुकान का नाम',
+    ownerMobile: 'मालिक का मोबाइल',
+    language: 'भाषा',
+    english: 'अंग्रेज़ी',
+    hindi: 'हिंदी',
+    whatsappTemplate: 'व्हाट्सएप याद दिलाने का टेम्पलेट',
+    templateHint: '{ShopName} और {Amount} वेरिएबल उपयोग करें।',
+    exportData: 'बैकअप एक्सपोर्ट (JSON)',
+    importData: 'JSON से इंपोर्ट',
+    lastBackup: 'अंतिम बैकअप:',
+    never: 'कभी नहीं',
+    backupReminder: 'इस हफ्ते डेटा बैकअप नहीं हुआ। अभी JSON बैकअप डाउनलोड करें।',
+    backupNow: 'अभी बैकअप करें',
+    dataManagement: 'डेटा प्रबंधन',
+    account: 'खाता',
+    signOut: 'साइन आउट',
+
+    // Auth
+    signIn: 'साइन इन',
+    signUp: 'साइन अप',
+    email: 'ईमेल',
+    password: 'पासवर्ड',
+    phone: 'फ़ोन नंबर (+91...)',
+    sendOTP: 'OTP भेजें',
+    verifyOTP: 'OTP सत्यापित करें',
+    enterOTP: '6 अंकों का OTP दर्ज करें',
+    orContinueWith: 'या इससे जारी रखें',
+    continueWithGoogle: 'Google से जारी रखें',
+    haveAccount: 'पहले से खाता है? साइन इन करें',
+    noAccount: 'खाता नहीं है? साइन अप करें',
+    welcomeBack: 'वापसी पर स्वागत!',
+    createAccount: 'खाता बनाएं',
+    yourShopName: 'आपकी दुकान का नाम',
+
+    // Misc
+    loading: 'लोड हो रहा है...',
+    error: 'कुछ गलत हो गया।',
+    retry: 'पुनः प्रयास',
+    close: 'बंद करें',
+    confirm: 'पुष्टि करें',
+  },
+};
+
+export function t(lang, key) {
+  return translations[lang]?.[key] || translations['en'][key] || key;
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Khata Sangrah - Digital Ledger",
+  "short_name": "Khata Sangrah",
+  "description": "Digital Khata (Ledger) for Indian Shopkeepers to manage customer credits",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f9f9f9",
+  "theme_color": "#075e54",
+  "lang": "hi-IN",
+  "scope": "/",
+  "categories": ["finance", "business", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add Udhaar",
+      "short_name": "Udhaar",
+      "description": "Add a new credit entry",
+      "url": "/?action=add-udhaar",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "View Customers",
+      "short_name": "Customers",
+      "description": "View all customers",
+      "url": "/customers",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": []
+}

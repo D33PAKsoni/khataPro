@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="#075e54"/>
+  <!-- Decorative circle -->
+  <circle cx="420" cy="90" r="80" fill="#ffffff" fill-opacity="0.05"/>
+  <!-- Ledger book shape -->
+  <rect x="100" y="110" width="270" height="320" rx="16" fill="#ffffff" fill-opacity="0.15"/>
+  <rect x="115" y="125" width="240" height="290" rx="12" fill="#ffffff" fill-opacity="0.10"/>
+  <!-- Spine line -->
+  <rect x="100" y="110" width="28" height="320" rx="8" fill="#ffffff" fill-opacity="0.25"/>
+  <!-- Lines representing ledger entries -->
+  <rect x="150" y="175" width="155" height="10" rx="5" fill="#ffffff" fill-opacity="0.7"/>
+  <rect x="150" y="200" width="110" height="8" rx="4" fill="#ffffff" fill-opacity="0.4"/>
+  <!-- Udhaar amount (red-ish) -->
+  <rect x="310" y="175" width="60" height="10" rx="5" fill="#ffb4ab" fill-opacity="0.9"/>
+
+  <rect x="150" y="235" width="155" height="10" rx="5" fill="#ffffff" fill-opacity="0.7"/>
+  <rect x="150" y="258" width="90" height="8" rx="4" fill="#ffffff" fill-opacity="0.4"/>
+  <!-- Jama amount (green-ish) -->
+  <rect x="310" y="235" width="60" height="10" rx="5" fill="#8df9b0" fill-opacity="0.9"/>
+
+  <rect x="150" y="293" width="155" height="10" rx="5" fill="#ffffff" fill-opacity="0.7"/>
+  <rect x="150" y="316" width="125" height="8" rx="4" fill="#ffffff" fill-opacity="0.4"/>
+  <rect x="310" y="293" width="60" height="10" rx="5" fill="#ffb4ab" fill-opacity="0.9"/>
+
+  <!-- Rupee symbol -->
+  <text x="345" y="410" font-family="Arial, sans-serif" font-size="72" font-weight="900" fill="#ffffff" text-anchor="middle">₹</text>
+</svg>
