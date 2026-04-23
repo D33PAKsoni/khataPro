@@ -177,7 +177,7 @@ export default function LedgerPage({ customerId, onBack }) {
             {[
               { id: FILTER.ALL, label: t(lang, 'allEntries') },
               { id: FILTER.UDHAAR, label: t(lang, 'udhaarsOnly') },
-              { id: FILTER.JAMA, label: t(lang, 'paidsOnly') },
+              { id: FILTER.JAMA, label: t(lang, 'jamasOnly') },
             ].map(({ id, label }) => (
               <button
                 key={id}
@@ -245,7 +245,7 @@ export default function LedgerPage({ customerId, onBack }) {
                           {/* Description + time */}
                           <div className="flex-1 text-left min-w-0">
                             <p className="font-semibold text-sm text-on-surface truncate">
-                              {tx.description || (isUdhaar ? t(lang, 'udhaar') : t(lang, 'paid'))}
+                              {tx.description || (isUdhaar ? t(lang, 'udhaar') : t(lang, 'jama'))}
                             </p>
                             <div className="flex items-center gap-2 mt-0.5">
                               <p className="text-xs text-on-surface-variant">
@@ -371,7 +371,7 @@ export default function LedgerPage({ customerId, onBack }) {
             onClick={() => setModalType('jama')}
             className="flex-1 py-3.5 bg-secondary text-on-primary font-black text-sm rounded-xl shadow-ambient active:scale-[0.97] transition-transform flex items-center justify-center gap-1.5"
           >
-            ↓ {t(lang, 'addPaid')}
+            ↓ {t(lang, 'addJama')}
           </button>
         </div>
       </div>
