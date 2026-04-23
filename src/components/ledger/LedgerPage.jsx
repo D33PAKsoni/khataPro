@@ -395,4 +395,3 @@ export default function LedgerPage({ customerId, onBack }) {
       )}
     </div>
   );
-}
