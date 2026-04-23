@@ -74,7 +74,7 @@ export default function AddTransactionModal({ customerId, type, onClose, onSucce
 
   return (
     <div className="fixed inset-0 z-50 bg-on-surface/50 backdrop-blur-sm flex items-end">
-      <div className="w-full max-h-[90vh] bg-surface-container-lowest rounded-t-3xl shadow-float flex flex-col animate-slide-up overflow-hidden">
+      <div className="w-full max-h-[90vh] bg-surface-container-lowest rounded-t-3xl shadow-float flex flex-col animate-slide-up overflow-hidden" style={{ paddingBottom: '40px' }}>
         {/* Header */}
         <div className={`px-5 pt-5 pb-4 ${isUdhaar ? 'bg-error-container/30' : 'bg-secondary-container/30'}`}>
           <div className="flex items-center justify-between">
