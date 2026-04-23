@@ -92,6 +92,9 @@ export default function LedgerPage({ customerId, onBack }) {
         ...Object.fromEntries(entries.filter(([, url]) => url)),
       }));
     }
+  }
+
+  async function handleDelete(txId) {
     await deleteTransaction(txId, customerId);
     setConfirmDeleteId(null);
     await loadTransactions();
