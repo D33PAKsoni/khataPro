@@ -92,7 +92,6 @@ export default function LedgerPage({ customerId, onBack }) {
         ...Object.fromEntries(entries.filter(([, url]) => url)),
       }));
     }
-  }
     await deleteTransaction(txId, customerId);
     setConfirmDeleteId(null);
     await loadTransactions();
@@ -395,3 +394,4 @@ export default function LedgerPage({ customerId, onBack }) {
       )}
     </div>
   );
+}
