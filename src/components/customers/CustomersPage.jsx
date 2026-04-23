@@ -171,7 +171,7 @@ export default function CustomersPage({ setActiveTab, setSelectedCustomerId }) {
                       </p>
                       {!isSettled && (
                         <p className={`text-[9px] uppercase font-bold ${isPositive ? 'text-tertiary-container' : 'text-secondary'}`}>
-                          {isPositive ? t(lang, 'udhaar') : t(lang, 'jama')}
+                          {isPositive ? t(lang, 'udhaar') : t(lang, 'paid')}
                         </p>
                       )}
                     </div>

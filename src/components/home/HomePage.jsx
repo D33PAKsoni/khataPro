@@ -162,7 +162,7 @@ export default function HomePage({ setActiveTab, setSelectedCustomerId }) {
                           ₹{paiseToRupees(Math.abs(balance))}
                         </p>
                         <p className={`text-[10px] uppercase font-bold ${isCredit ? 'text-tertiary-container' : 'text-secondary'}`}>
-                          {isCredit ? t(lang, 'udhaar') : t(lang, 'jama')}
+                          {isCredit ? t(lang, 'udhaar') : t(lang, 'paid')}
                         </p>
                       </div>
                       {isCredit

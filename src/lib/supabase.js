@@ -172,20 +172,55 @@ export function buildWhatsAppURL(mobile, template, shopName, amountPaise) {
 // =========================================================
 // SUPABASE STORAGE - Bill Images
 // =========================================================
+
+/**
+ * Upload a bill image and return the STORAGE PATH (not a URL).
+ * We store paths, not URLs, because:
+ *  - Public URLs 404 on private buckets
+ *  - Signed URLs expire, so we generate them fresh at view time
+ */
 export async function uploadBillImage(file, userId, customerId) {
-  const ext = file.name.split('.').pop();
+  const ext = file.name.split('.').pop().toLowerCase();
   const fileName = `${userId}/${customerId}/${Date.now()}.${ext}`;
   const { data, error } = await supabase.storage
     .from('bill-images')
     .upload(fileName, file, { contentType: file.type, upsert: false });
   if (error) throw error;
-  const { data: urlData } = supabase.storage.from('bill-images').getPublicUrl(data.path);
-  return urlData.publicUrl;
+  // Return the storage path, e.g. "userId/customerId/1234567890.jpg"
+  return data.path;
 }
 
-export async function deleteBillImage(url) {
-  // Extract path from URL
-  const path = url.split('/bill-images/')[1];
+/**
+ * Generate a signed URL for a stored path. Valid for 1 hour.
+ * Call this at view time — never store the signed URL itself.
+ */
+export async function getSignedUrl(path) {
+  // Handle legacy entries that stored full URLs instead of paths
+  if (path.startsWith('http')) {
+    // Try to extract the path portion after /bill-images/
+    const match = path.match(/\/bill-images\/(.+)/);
+    if (match) path = decodeURIComponent(match[1]);
+    else return path; // Can't parse — return as-is and hope for the best
+  }
+
+  const { data, error } = await supabase.storage
+    .from('bill-images')
+    .createSignedUrl(path, 60 * 60); // 1 hour expiry
+
+  if (error) {
+    console.error('[Storage] Failed to sign URL:', error.message);
+    return null;
+  }
+  return data.signedUrl;
+}
+
+export async function deleteBillImage(path) {
   if (!path) return;
+  // Handle legacy full URLs
+  if (path.startsWith('http')) {
+    const match = path.match(/\/bill-images\/(.+)/);
+    if (match) path = decodeURIComponent(match[1]);
+    else return;
+  }
   await supabase.storage.from('bill-images').remove([path]);
 }

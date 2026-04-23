@@ -67,11 +67,30 @@ function AppShell() {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedCustomerId, setSelectedCustomerId] = useState(null);
 
-  // When navigating to ledger, ensure we came from customers
   function handleSetActiveTab(tab) {
     if (tab !== 'ledger') setSelectedCustomerId(null);
     setActiveTab(tab);
   }
+
+  // Intercept Android hardware back button — navigate within app instead of exiting
+  useEffect(() => {
+    function handlePopState() {
+      if (activeTab === 'ledger') {
+        setActiveTab('customers');
+        setSelectedCustomerId(null);
+      } else if (activeTab !== 'home') {
+        setActiveTab('home');
+      } else {
+        // On home tab, let the browser/OS handle it (minimize, not exit)
+        window.history.pushState(null, '', window.location.href);
+      }
+    }
+
+    // Push a state so there's always something to pop back to
+    window.history.pushState(null, '', window.location.href);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [activeTab]);
 
   if (loading) {
     return (
@@ -85,8 +104,6 @@ function AppShell() {
   }
 
   if (!session) return <AuthPage />;
-
-  const showNav = activeTab !== 'ledger';
 
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-background">
@@ -109,7 +126,7 @@ function AppShell() {
           />
         </div>
 
-        {/* Ledger */}
+        {/* Ledger — sits above nav, its own action buttons sit above the nav bar */}
         {selectedCustomerId && (
           <div className={`absolute inset-0 transition-opacity duration-200 ${activeTab === 'ledger' ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
             <LedgerPage
@@ -128,13 +145,12 @@ function AppShell() {
         </div>
       </div>
 
-      {showNav && (
-        <BottomNav
-          activeTab={activeTab}
-          setActiveTab={handleSetActiveTab}
-          lang={lang}
-        />
-      )}
+      {/* BottomNav always visible on all tabs */}
+      <BottomNav
+        activeTab={activeTab}
+        setActiveTab={handleSetActiveTab}
+        lang={lang}
+      />
     </div>
   );
 }

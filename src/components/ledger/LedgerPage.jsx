@@ -3,7 +3,7 @@ import { useApp } from '../../context/AppContext';
 import { t } from '../../lib/i18n';
 import {
   formatCurrency, paiseToRupees, formatDate, formatDateSeparator,
-  buildWhatsAppURL, deleteBillImage,
+  buildWhatsAppURL, deleteBillImage, getSignedUrl,
 } from '../../lib/supabase';
 import {
   ArrowLeft, MessageCircle, Trash2, Pencil, ExternalLink,
@@ -23,6 +23,8 @@ export default function LedgerPage({ customerId, onBack }) {
   const [showEditCustomer, setShowEditCustomer] = useState(false);
   const [expandedTx, setExpandedTx] = useState(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+  // Cache of signed URLs keyed by "txId-index" — generated on expand, valid 1hr
+  const [signedUrls, setSignedUrls] = useState({});
 
   const customer = customers.find(
     (c) => c.customer_id === customerId || c.id === customerId
@@ -71,7 +73,26 @@ export default function LedgerPage({ customerId, onBack }) {
   const isSettled = balancePaise === 0;
   const isInCredit = balancePaise < 0; // shop owes customer
 
-  async function handleDelete(txId) {
+  async function handleExpandTx(tx) {
+    const isExpanded = expandedTx === tx.id;
+    setExpandedTx(isExpanded ? null : tx.id);
+
+    // Sign URLs when expanding, if not already cached
+    if (!isExpanded && tx.image_urls?.length > 0) {
+      const entries = await Promise.all(
+        tx.image_urls.map(async (path, i) => {
+          const cacheKey = `${tx.id}-${i}`;
+          if (signedUrls[cacheKey]) return [cacheKey, signedUrls[cacheKey]];
+          const url = await getSignedUrl(path);
+          return [cacheKey, url];
+        })
+      );
+      setSignedUrls((prev) => ({
+        ...prev,
+        ...Object.fromEntries(entries.filter(([, url]) => url)),
+      }));
+    }
+  }
     await deleteTransaction(txId, customerId);
     setConfirmDeleteId(null);
     await loadTransactions();
@@ -157,7 +178,7 @@ export default function LedgerPage({ customerId, onBack }) {
             {[
               { id: FILTER.ALL, label: t(lang, 'allEntries') },
               { id: FILTER.UDHAAR, label: t(lang, 'udhaarsOnly') },
-              { id: FILTER.JAMA, label: t(lang, 'jamasOnly') },
+              { id: FILTER.JAMA, label: t(lang, 'paidsOnly') },
             ].map(({ id, label }) => (
               <button
                 key={id}
@@ -176,7 +197,7 @@ export default function LedgerPage({ customerId, onBack }) {
       </header>
 
       {/* ── Transaction List ── */}
-      <main className="flex-1 overflow-y-auto pb-32 pt-4 px-4">
+      <main className="flex-1 overflow-y-auto pb-44 pt-4 px-4">
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="w-8 h-8 border-2 border-primary-container/30 border-t-primary-container rounded-full animate-spin" />
@@ -208,7 +229,7 @@ export default function LedgerPage({ customerId, onBack }) {
                         className={txIdx < group.items.length - 1 ? 'border-b border-outline-variant/10' : ''}
                       >
                         <button
-                          onClick={() => setExpandedTx(isExpanded ? null : tx.id)}
+                          onClick={() => handleExpandTx(tx)}
                           className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-surface-container-high transition-colors"
                         >
                           {/* Type indicator */}
@@ -225,7 +246,7 @@ export default function LedgerPage({ customerId, onBack }) {
                           {/* Description + time */}
                           <div className="flex-1 text-left min-w-0">
                             <p className="font-semibold text-sm text-on-surface truncate">
-                              {tx.description || (isUdhaar ? t(lang, 'udhaar') : t(lang, 'jama'))}
+                              {tx.description || (isUdhaar ? t(lang, 'udhaar') : t(lang, 'paid'))}
                             </p>
                             <div className="flex items-center gap-2 mt-0.5">
                               <p className="text-xs text-on-surface-variant">
@@ -269,18 +290,30 @@ export default function LedgerPage({ customerId, onBack }) {
                                   {t(lang, 'viewBills')}
                                 </p>
                                 <div className="flex gap-2 flex-wrap">
-                                  {tx.image_urls.map((url, i) => (
-                                    <a
-                                      key={i}
-                                      href={url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="flex items-center gap-1 px-3 py-1.5 bg-primary-container/10 text-primary-container rounded-lg text-xs font-semibold"
-                                    >
-                                      <ExternalLink size={11} />
-                                      Bill {i + 1}
-                                    </a>
-                                  ))}
+                                  {tx.image_urls.map((_, i) => {
+                                    const cacheKey = `${tx.id}-${i}`;
+                                    const signedUrl = signedUrls[cacheKey];
+                                    return signedUrl ? (
+                                      <a
+                                        key={i}
+                                        href={signedUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-1 px-3 py-1.5 bg-primary-container/10 text-primary-container rounded-lg text-xs font-semibold"
+                                      >
+                                        <ExternalLink size={11} />
+                                        Bill {i + 1}
+                                      </a>
+                                    ) : (
+                                      <span
+                                        key={i}
+                                        className="flex items-center gap-1 px-3 py-1.5 bg-surface-container text-on-surface-variant rounded-lg text-xs"
+                                      >
+                                        <div className="w-3 h-3 border border-on-surface-variant/30 border-t-on-surface-variant rounded-full animate-spin" />
+                                        Loading...
+                                      </span>
+                                    );
+                                  })}
                                 </div>
                               </div>
                             )}
@@ -325,8 +358,9 @@ export default function LedgerPage({ customerId, onBack }) {
         )}
       </main>
 
-      {/* ── Footer Action Buttons ── */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 px-4 pb-8 pt-3 bg-surface-container-lowest/95 backdrop-blur-xl shadow-ambient-up">
+      {/* ── Footer Action Buttons — sits above the 80px bottom nav ── */}
+      <div className="fixed left-0 right-0 z-40 px-4 pt-3 pb-3 bg-surface-container-lowest/95 backdrop-blur-xl shadow-ambient-up"
+        style={{ bottom: 'calc(64px + env(safe-area-inset-bottom, 0px))' }}>
         <div className="flex gap-3">
           <button
             onClick={() => setModalType('udhaar')}
@@ -338,7 +372,7 @@ export default function LedgerPage({ customerId, onBack }) {
             onClick={() => setModalType('jama')}
             className="flex-1 py-3.5 bg-secondary text-on-primary font-black text-sm rounded-xl shadow-ambient active:scale-[0.97] transition-transform flex items-center justify-center gap-1.5"
           >
-            ↓ {t(lang, 'addJama')}
+            ↓ {t(lang, 'addPaid')}
           </button>
         </div>
       </div>
