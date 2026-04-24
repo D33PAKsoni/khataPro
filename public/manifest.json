@@ -30,14 +30,14 @@
       "short_name": "Udhaar",
       "description": "Add a new credit entry",
       "url": "/?action=add-udhaar",
-      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icons/tick.png", "sizes": "192x192" }]
     },
     {
       "name": "View Customers",
       "short_name": "Customers",
       "description": "View all customers",
       "url": "/customers",
-      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icons/person.png", "sizes": "192x192" }]
     }
   ],
   "screenshots": []

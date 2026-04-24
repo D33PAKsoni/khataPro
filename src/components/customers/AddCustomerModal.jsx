@@ -65,7 +65,7 @@ export default function AddCustomerModal({ onClose, editCustomer = null }) {
               type="tel"
               value={mobile}
               onChange={(e) => setMobile(e.target.value)}
-              placeholder="+91 98765 43210"
+              placeholder="Mobile number (optional)"
               className={inputClass}
             />
           </div>

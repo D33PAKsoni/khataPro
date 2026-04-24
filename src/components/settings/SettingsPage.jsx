@@ -152,7 +152,7 @@ export default function SettingsPage() {
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value)}
                     className={`${inputClass} pl-9`}
-                    placeholder="+91 98765 43210"
+                    placeholder="Mobile number (optional)"
                   />
                 </div>
               </div>
